@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.kunbao.weixin</groupId>
-    <artifactId>sdk</artifactId>
+    <artifactId>wexinsdk</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
     <name>wxsdk</name>
@@ -74,7 +74,11 @@
             <artifactId>commons-codec</artifactId>
             <version>${commons.codec.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
