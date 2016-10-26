@@ -5,7 +5,9 @@ import com.kunbao.weixin.sdk.message.domain.constant.WXMessageType;
 import lombok.Getter;
 import lombok.ToString;
 
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
@@ -18,6 +20,11 @@ import java.util.List;
  * <ArticleCount>2</ArticleCount>
  * <Articles>
  * <item>
+ * </item>
+ * <item>
+ *
+ * </item>
+ * </Articles>
  * Created by lemon_bar on 15/7/23.
  */
 @Getter
@@ -27,7 +34,9 @@ public class WXSendNews extends WXMessageBase {
     @XmlElement(name = "ArticleCount")
     private int articleCount;
 
-    @XmlElement(name = "Articles")
+//    @XmlElement(name = "Articles")
+    @XmlElementWrapper(name = "Articles")
+    @XmlElement(name = "item")
     private List<WXSendNewsItem> articles;
 
     protected WXSendNews() {

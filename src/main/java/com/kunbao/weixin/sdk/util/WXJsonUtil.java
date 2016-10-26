@@ -1,6 +1,7 @@
 package com.kunbao.weixin.sdk.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +19,7 @@ public class WXJsonUtil {
         try {
             return getMapper().readValue(jsonStr, cls);
         } catch (IOException e) {
-            throw new WXException(e.getMessage());
+            throw new WXException(jsonStr == null? "":jsonStr + "\n" + e.getMessage());
         }
     }
 
@@ -27,6 +28,7 @@ public class WXJsonUtil {
             mapper = new ObjectMapper();
             mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
             mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+            mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS, true) ;
         }
         return mapper;
     }

@@ -83,10 +83,10 @@ public class WXBizMsgCrypt {
 	}
 
 	// 随机生成16位字符串
-	String getRandomStr() {
+	public String getRandomStr() {
 		String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 		Random random = new Random();
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < 16; i++) {
 			int number = random.nextInt(base.length());
 			sb.append(base.charAt(number));
@@ -101,7 +101,7 @@ public class WXBizMsgCrypt {
 	 * @return 加密后base64编码的字符串
 	 * @throws AesException aes加密失败
 	 */
-	String encrypt(String randomStr, String text) throws AesException {
+	public String encrypt(String randomStr, String text) throws AesException {
 		ByteGroup byteCollector = new ByteGroup();
 		byte[] randomStrBytes = randomStr.getBytes(CHARSET);
 		byte[] textBytes = text.getBytes(CHARSET);
@@ -132,9 +132,8 @@ public class WXBizMsgCrypt {
 			byte[] encrypted = cipher.doFinal(unencrypted);
 
 			// 使用BASE64对加密后的字符串进行编码
-			String base64Encrypted = base64.encodeToString(encrypted);
 
-			return base64Encrypted;
+			return base64.encodeToString(encrypted);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new AesException(AesException.EncryptAESError);
@@ -213,7 +212,7 @@ public class WXBizMsgCrypt {
 		String encrypt = encrypt(getRandomStr(), replyMsg);
 
 		// 生成安全签名
-		if (timeStamp == "") {
+		if (timeStamp.equals("")) {
 			timeStamp = Long.toString(System.currentTimeMillis());
 		}
 
@@ -221,8 +220,7 @@ public class WXBizMsgCrypt {
 
 		// System.out.println("发送给平台的签名是: " + signature[1].toString());
 		// 生成发送的xml
-		String result = XMLParse.generate(encrypt, signature, timeStamp, nonce);
-		return result;
+		return XMLParse.generate(encrypt, signature, timeStamp, nonce);
 	}
 
 	/**
@@ -259,8 +257,7 @@ public class WXBizMsgCrypt {
 		}
 
 		// 解密
-		String result = decrypt(encrypt[1].toString());
-		return result;
+		return decrypt(encrypt[1].toString());
 	}
 
 	/**
@@ -281,8 +278,7 @@ public class WXBizMsgCrypt {
 			throw new AesException(AesException.ValidateSignatureError);
 		}
 
-		String result = decrypt(echoStr);
-		return result;
+		return decrypt(echoStr);
 	}
 
 }

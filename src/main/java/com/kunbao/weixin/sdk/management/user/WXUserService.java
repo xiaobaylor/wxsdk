@@ -83,4 +83,11 @@ public class WXUserService {
         WXJsonResponse response = (WXJsonResponse) WXHttpDispatch.execute(request);
         return response.isSuccess();
     }
+
+    public boolean moveTagBatch(List<String> openIdList, int tagId) throws WXException {
+        WxUserTagBatchMove batchMove = new WxUserTagBatchMove(openIdList, tagId);
+        WxUserTagBatchMoveRequest request = new WxUserTagBatchMoveRequest(WXTokenController.getToken(), batchMove);
+        WXJsonResponse response = (WXJsonResponse) WXHttpDispatch.execute(request);
+        return response.isSuccess();
+    }
 }

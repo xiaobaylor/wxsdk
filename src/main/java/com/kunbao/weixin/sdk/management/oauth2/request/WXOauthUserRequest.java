@@ -1,6 +1,7 @@
 package com.kunbao.weixin.sdk.management.oauth2.request;
 
 
+import com.kunbao.weixin.sdk.base.domain.constant.WXBaseUrl;
 import com.kunbao.weixin.sdk.base.exception.WXException;
 import com.kunbao.weixin.sdk.base.request.WXRequest;
 import com.kunbao.weixin.sdk.management.oauth2.response.WXOAuthUserResponse;
@@ -12,7 +13,7 @@ import com.kunbao.weixin.sdk.util.WXJsonUtil;
 public class WXOAuthUserRequest extends WXRequest<WXOAuthUserResponse> {
 
     public WXOAuthUserRequest(String accessToken, String openId, String lang) {
-        super();
+        super(WXBaseUrl.COMMON);
         this.path = "/sns/userinfo";
         this.addParameter("access_token", accessToken);
         this.addParameter("openid", openId);

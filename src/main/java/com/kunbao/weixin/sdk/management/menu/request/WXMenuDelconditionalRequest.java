@@ -8,26 +8,15 @@ import com.kunbao.weixin.sdk.management.menu.domain.Menu;
 import com.kunbao.weixin.sdk.util.WXJsonUtil;
 
 /**
- * Created by lemon_bar on 15/7/7.
+ * Created by lixingdong on 16/5/3.
  */
-public class WXMenuCreateRequest extends WXRequest<WXJsonResponse> {
-
-    public WXMenuCreateRequest(String token, Menu menu) throws WXException {
+public class WXMenuDelconditionalRequest  extends WXRequest<WXJsonResponse> {
+    public WXMenuDelconditionalRequest(String token) throws WXException {
         super();
         this.method = WXHTTPMethod.POST;
-        this.path = "/cgi-bin/menu/create";
-        this.addParameter("access_token", token);
-        this.body = WXJsonUtil.beanToJson(menu);
+        this.path = "/cgi-bin/menu/delconditional";
+        this.addParameter("access_token",token);
     }
-
-    public WXMenuCreateRequest(String token, String menu) throws WXException {
-        super();
-        this.method = WXHTTPMethod.POST;
-        this.path = "/cgi-bin/menu/create";
-        this.addParameter("access_token", token);
-        this.body = menu;
-    }
-
     @Override
     public WXJsonResponse createResponse(String body) throws WXException {
         return WXJsonUtil.jsonToBean(body, WXJsonResponse.class);

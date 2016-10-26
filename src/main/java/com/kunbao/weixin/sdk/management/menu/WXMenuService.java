@@ -4,10 +4,7 @@ import com.kunbao.weixin.sdk.base.WXHttpDispatch;
 import com.kunbao.weixin.sdk.base.exception.WXException;
 import com.kunbao.weixin.sdk.base.response.WXJsonResponse;
 import com.kunbao.weixin.sdk.management.menu.domain.Menu;
-import com.kunbao.weixin.sdk.management.menu.request.WXMenuCreateRequest;
-import com.kunbao.weixin.sdk.management.menu.request.WXMenuDeleteRequest;
-import com.kunbao.weixin.sdk.management.menu.request.WXMenuGetRequest;
-import com.kunbao.weixin.sdk.management.menu.request.WXSelfMenuGetRequest;
+import com.kunbao.weixin.sdk.management.menu.request.*;
 import com.kunbao.weixin.sdk.management.menu.response.WXMenuGetResponse;
 import com.kunbao.weixin.sdk.management.menu.response.WXSelfMenuGetResponse;
 import com.kunbao.weixin.sdk.token.WXTokenController;
@@ -18,6 +15,18 @@ import com.kunbao.weixin.sdk.token.WXTokenController;
 public class WXMenuService {
     public boolean createMenu(Menu menu) throws WXException {
         WXMenuCreateRequest request = new WXMenuCreateRequest(WXTokenController.getToken(), menu);
+        WXJsonResponse response = (WXJsonResponse) WXHttpDispatch.execute(request);
+        return response.isSuccess();
+    }
+
+    public boolean createJsonMenu(String menu) throws WXException {
+        WXMenuCreateRequest request = new WXMenuCreateRequest(WXTokenController.getToken(), menu);
+        WXJsonResponse response = (WXJsonResponse) WXHttpDispatch.execute(request);
+        return response.isSuccess();
+    }
+
+    public boolean addconditionalMenu(String menu) throws WXException {
+        WXMenuAddconditionalRequest request = new WXMenuAddconditionalRequest(WXTokenController.getToken(), menu);
         WXJsonResponse response = (WXJsonResponse) WXHttpDispatch.execute(request);
         return response.isSuccess();
     }
@@ -36,6 +45,11 @@ public class WXMenuService {
 
     public boolean deleteMenu() throws WXException {
         WXMenuDeleteRequest request = new WXMenuDeleteRequest(WXTokenController.getToken());
+        WXJsonResponse response = (WXJsonResponse) WXHttpDispatch.execute(request);
+        return response.isSuccess();
+    }
+    public boolean delconditionalMenu() throws WXException {
+        WXMenuDelconditionalRequest request = new WXMenuDelconditionalRequest(WXTokenController.getToken());
         WXJsonResponse response = (WXJsonResponse) WXHttpDispatch.execute(request);
         return response.isSuccess();
     }

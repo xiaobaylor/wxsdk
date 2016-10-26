@@ -31,7 +31,7 @@ public class WXOAuthUserResponse extends WXJsonResponse {
     private String headImgUrl;
 
     @JsonProperty("privilege")
-    private String privilege;
+    private String[] privilege;
 
     @JsonProperty("unionid")
     private String unionId;

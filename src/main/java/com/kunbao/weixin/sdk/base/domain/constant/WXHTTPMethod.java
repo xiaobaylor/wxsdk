@@ -6,5 +6,7 @@ package com.kunbao.weixin.sdk.base.domain.constant;
 public enum WXHTTPMethod {
     GET,
     POST,
-    UPLOAD;
+    UPLOAD,
+    DOWNLOAD,
+    XML;
 }

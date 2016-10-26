@@ -9,11 +9,10 @@ import com.kunbao.weixin.sdk.message.domain.constant.WXMessageType;
 import com.kunbao.weixin.sdk.message.domain.received.common.*;
 import com.kunbao.weixin.sdk.message.domain.received.event.*;
 import com.kunbao.weixin.sdk.message.domain.send.json.*;
-import com.kunbao.weixin.sdk.message.domain.send.json.metadata.MusicContent;
-import com.kunbao.weixin.sdk.message.domain.send.json.metadata.NewsItemContent;
-import com.kunbao.weixin.sdk.message.domain.send.json.metadata.VideoContent;
+import com.kunbao.weixin.sdk.message.domain.send.json.metadata.*;
 import com.kunbao.weixin.sdk.message.domain.send.xml.*;
 import com.kunbao.weixin.sdk.message.request.WXCustomMessageSendRequest;
+import com.kunbao.weixin.sdk.message.request.WXTemplateMessageSendRequest;
 import com.kunbao.weixin.sdk.token.WXTokenController;
 import com.kunbao.weixin.sdk.util.WXParserUtil;
 import com.kunbao.weixin.sdk.util.xml.WXXMLUtil;
@@ -97,6 +96,18 @@ public class WXMessageService {
         return response.isSuccess();
     }
 
+    public boolean sendTempleteMessage(String toUser, TemplateInfo templateInfo, List<TemplateData> dataList) throws WXException {
+        WXTemplateMessage message = new WXTemplateMessage(toUser, templateInfo);
+        for(TemplateData data: dataList) {
+            message.addData(data.getField(), data);
+        }
+
+        WXTemplateMessageSendRequest request = new WXTemplateMessageSendRequest(WXTokenController.getToken(), message);
+        WXJsonResponse response = (WXJsonResponse) WXHttpDispatch.execute(request);
+
+        return response.isSuccess();
+    }
+
     public WXMessageBase consumeMessage(String messageStr) throws WXException {
         WXMessageType messageType = WXParserUtil.parserPushedMessageType(messageStr);
         if (messageType != null) {
@@ -140,6 +151,8 @@ public class WXMessageService {
                     return WXParserUtil.parserMessage(eventStr, WXReceivedClickEvent.class);
                 case VIEW:
                     return WXParserUtil.parserMessage(eventStr, WXReceivedViewEvent.class);
+                case TEMPLATESENDJOBFINISH:
+                    return WXParserUtil.parserMessage(eventStr, WXReceivedTemplateSendEvent.class);
                 default:
                     throw new WXException(String.format("no matched wx event type: %s", eventStr));
             }

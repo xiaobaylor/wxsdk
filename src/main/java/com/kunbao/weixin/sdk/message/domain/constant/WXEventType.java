@@ -9,5 +9,12 @@ public enum WXEventType {
     SCAN,
     LOCATION,
     CLICK,
-    VIEW;
+    VIEW,
+    scancode_push,
+    scancode_waitmsg,
+    pic_sysphoto,
+    pic_photo_or_album,
+    pic_weixin,
+    location_select,
+    TEMPLATESENDJOBFINISH
 }

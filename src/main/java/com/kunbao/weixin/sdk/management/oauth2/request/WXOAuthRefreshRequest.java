@@ -1,6 +1,7 @@
 package com.kunbao.weixin.sdk.management.oauth2.request;
 
 
+import com.kunbao.weixin.sdk.base.domain.constant.WXBaseUrl;
 import com.kunbao.weixin.sdk.base.exception.WXException;
 import com.kunbao.weixin.sdk.base.request.WXRequest;
 import com.kunbao.weixin.sdk.management.oauth2.response.WXOAuthResponse;
@@ -22,7 +23,7 @@ public class WXOAuthRefreshRequest extends WXRequest<WXOAuthResponse> {
     private final static String GRANT_TYPE_DEFAULT = "refresh_token";
 
     public WXOAuthRefreshRequest(String appId, String refresh_token) {
-        super();
+        super(WXBaseUrl.COMMON);
         this.path = "/sns/oauth2/refresh_token";
         this.addParameter("grant_type", GRANT_TYPE_DEFAULT);
         this.addParameter("appid", appId);

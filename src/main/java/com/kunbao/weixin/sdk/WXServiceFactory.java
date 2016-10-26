@@ -5,8 +5,10 @@ import com.kunbao.weixin.sdk.management.material.WXMaterialService;
 import com.kunbao.weixin.sdk.management.menu.WXMenuService;
 import com.kunbao.weixin.sdk.management.oauth2.WXOAuthService;
 import com.kunbao.weixin.sdk.management.user.WXUserService;
+import com.kunbao.weixin.sdk.media.WXMediaService;
 import com.kunbao.weixin.sdk.message.WXMessageService;
 import com.kunbao.weixin.sdk.security.WXSecurityService;
+import com.kunbao.weixin.sdk.ticket.WXTicketService;
 
 /**
  * Created by lemon_bar on 15/7/22.
@@ -74,7 +76,25 @@ public class WXServiceFactory {
         }
 
         return wxOAuthService;
+    }
 
+    private WXTicketService wxTicketService;
+
+    public synchronized WXTicketService getWXTicketService() {
+        if(wxTicketService == null) {
+            wxTicketService = new WXTicketService();
+        }
+
+        return wxTicketService;
+    }
+
+    private WXMediaService wxMediaService;
+
+    public synchronized WXMediaService getWxMediaService(){
+        if(wxMediaService == null){
+            wxMediaService = new WXMediaService();
+        }
+        return wxMediaService;
     }
 
 

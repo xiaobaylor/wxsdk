@@ -5,6 +5,7 @@ import com.kunbao.weixin.sdk.base.exception.WXException;
 import com.kunbao.weixin.sdk.base.request.WXRequest;
 import com.kunbao.weixin.sdk.management.user.response.WXUserGetResponse;
 import com.kunbao.weixin.sdk.util.WXJsonUtil;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&next_openid=NEXT_OPENID
@@ -16,7 +17,9 @@ public class WXUserGetRequest extends WXRequest<WXUserGetResponse> {
         this.method = WXHTTPMethod.GET;
         this.path = "/cgi-bin/user/get";
         this.addParameter("access_token", token);
-        this.addParameter("next_openid", nextOpenId);
+        if (StringUtils.isNotEmpty(nextOpenId)) {
+            this.addParameter("next_openid", nextOpenId);
+        }
     }
 
     @Override

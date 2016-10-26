@@ -11,7 +11,7 @@ public class WXJsonResponseChecker {
             throw new WXException("WX Json response is null");
         }
         if (!wxJsonResponse.isSuccess()) {
-            throw new WXException(wxJsonResponse.getCode(), wxJsonResponse.getMsg());
+             throw new WXException(wxJsonResponse.getCode(), wxJsonResponse.getMsg());
         }
     }
 }

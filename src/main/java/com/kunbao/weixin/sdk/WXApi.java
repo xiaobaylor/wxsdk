@@ -21,19 +21,20 @@ import com.kunbao.weixin.sdk.management.user.domain.WXUserList;
 import com.kunbao.weixin.sdk.management.user.response.WXUserGetResponse;
 import com.kunbao.weixin.sdk.management.user.response.WXUserInfoListResponse;
 import com.kunbao.weixin.sdk.management.user.response.WXUserInfoResponse;
+import com.kunbao.weixin.sdk.media.response.WXMediaResponse;
 import com.kunbao.weixin.sdk.message.domain.base.WXMessageBase;
-import com.kunbao.weixin.sdk.message.domain.send.json.metadata.MusicContent;
-import com.kunbao.weixin.sdk.message.domain.send.json.metadata.NewsItemContent;
-import com.kunbao.weixin.sdk.message.domain.send.json.metadata.VideoContent;
+import com.kunbao.weixin.sdk.message.domain.send.json.metadata.*;
 import com.kunbao.weixin.sdk.message.domain.send.xml.WXSendMusicMedia;
 import com.kunbao.weixin.sdk.message.domain.send.xml.WXSendNewsItem;
 import com.kunbao.weixin.sdk.message.domain.send.xml.WXSendVideoMedia;
+import com.kunbao.weixin.sdk.ticket.response.WXJsApiTicketResponse;
 import com.kunbao.weixin.sdk.util.aes.AesException;
 
 import java.util.List;
 
 /**
  * Created by lemon_bar on 15/7/19.
+ * 2016.05.12 采用"标签" 替换 "分组"
  */
 public class WXApi {
     private WXServiceFactory factory;
@@ -269,6 +270,19 @@ public class WXApi {
     }
 
     /**
+     * 发送模板消息
+     *
+     * @param toUser 用户的open_id
+     * @param templateInfo
+     * @param dataList
+     * @return 是否发送成功
+     * @throws WXException
+     */
+    public boolean sendTempleteMessage(String toUser, TemplateInfo templateInfo, List<TemplateData> dataList) throws WXException {
+        return factory.getWxMessageService().sendTempleteMessage(toUser, templateInfo, dataList);
+    }
+
+    /**
      * 新增临时素材
      *
      * @param type     素材类型
@@ -363,6 +377,7 @@ public class WXApi {
      * @return 新建分组信息
      * @throws WXException
      */
+    @Deprecated
     public WXUserGroup createUserGroup(String groupName) throws WXException {
         return factory.getWxUserService().createUserGroup(groupName);
     }
@@ -373,6 +388,7 @@ public class WXApi {
      * @return 分组列表
      * @throws WXException
      */
+    @Deprecated
     public List<WXUserGroup> getUserGroup() throws WXException {
         return factory.getWxUserService().getUserGroup();
     }
@@ -384,6 +400,7 @@ public class WXApi {
      * @return 用户所在分组id
      * @throws WXException
      */
+    @Deprecated
     public int getUserInGroupId(String openId) throws WXException {
         return factory.getWxUserService().getUserInGroupId(openId);
     }
@@ -396,6 +413,7 @@ public class WXApi {
      * @return 是否成功
      * @throws WXException
      */
+    @Deprecated
     public boolean updateUserGroup(int groupId, String groupName) throws WXException {
         return factory.getWxUserService().updateUserGroup(groupId, groupName);
     }
@@ -408,6 +426,7 @@ public class WXApi {
      * @return 是否成功
      * @throws WXException
      */
+    @Deprecated
     public boolean moveUserToGroup(String openId, int groupId) throws WXException {
         return factory.getWxUserService().moveUserToGroup(openId, groupId);
     }
@@ -420,6 +439,7 @@ public class WXApi {
      * @return 是否成功
      * @throws WXException
      */
+    @Deprecated
     public boolean moveBatchUserToGroup(List<String> openIdList, int groupId) throws WXException {
         return factory.getWxUserService().moveBatchUserToGroup(openIdList, groupId);
     }
@@ -431,6 +451,7 @@ public class WXApi {
      * @return 是否成功
      * @throws WXException
      */
+    @Deprecated
     public boolean deleteUseGroup(int groupId) throws WXException {
         return factory.getWxUserService().deleteUseGroup(groupId);
     }
@@ -493,6 +514,29 @@ public class WXApi {
     }
 
     /**
+     * 创建菜单
+     *
+     * @param menu 菜单
+     * @return 是否成功
+     * @throws WXException
+     */
+    public boolean createJsonMenu(String menu) throws WXException {
+        return factory.getWxMenuService().createJsonMenu(menu);
+    }
+
+
+    /**
+     * 创建个性化菜单
+     *
+     * @param menu 菜单
+     * @return 是否成功
+     * @throws WXException
+     */
+    public boolean addconditionalMenu(String menu) throws WXException {
+        return factory.getWxMenuService().addconditionalMenu(menu);
+    }
+
+    /**
      * 获取菜单
      *
      * @return 菜单
@@ -520,6 +564,16 @@ public class WXApi {
      */
     public boolean deleteMenu() throws WXException {
         return factory.getWxMenuService().deleteMenu();
+    }
+
+    /**
+     * 删除个性化菜单
+     *
+     * @return 是否成功
+     * @throws WXException
+     */
+    public boolean delconditionalMenu() throws WXException {
+        return factory.getWxMenuService().delconditionalMenu();
     }
 
     /**
@@ -584,5 +638,25 @@ public class WXApi {
 
     public WXOAuthUserResponse getAuthUserInfo(String accessToken, String openId, String lang) throws WXException {
         return factory.getWxOAuthService().getAuthUserInfo(accessToken, openId, lang);
+    }
+
+    public WXJsApiTicketResponse getWXJsApiTicketResponse() throws WXException {
+        return factory.getWXTicketService().getWXJsApiTicketResponse();
+    }
+
+    public WXMediaResponse getWXMedia(String filePath, String mediaId) throws WXException {
+        return factory.getWxMediaService().getMediaResponse(filePath, mediaId);
+    }
+
+    /**
+     * 批量给用户打标签
+     *
+     * @param openIdList 用户openid列表
+     * @param tagId    标签ID
+     * @return 是否成功
+     * @throws WXException
+     */
+    public boolean moveBatchUserTag(List<String> openIdList, int tagId) throws WXException {
+        return factory.getWxUserService().moveTagBatch(openIdList, tagId);
     }
 }
